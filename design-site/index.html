@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexwork - Remix</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @theme {
+            --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+        }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .speech-bubble-tail {
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+        }
+        .selection-bg-black::selection {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body class="selection-bg-black">
+    <div id="app-container" class="h-[480vh] bg-[#f4f4f4] relative bg-cover bg-center bg-no-repeat" style="background-image: url('https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/bg.png')">
+        <div class="sticky top-0 h-screen w-full overflow-hidden">
+            <!-- Header -->
+            <header class="fixed top-0 left-0 w-full px-[100px] py-6 flex items-center justify-between z-50 bg-transparent">
+                <div class="flex items-center">
+                    <img src="https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/logo.png" alt="Logo" class="w-[160px] h-[74px] object-contain" referrerPolicy="no-referrer">
+                </div>
+                <div class="flex items-center gap-12">
+                    <nav class="hidden md:flex items-center gap-10 font-semibold text-[15px] text-black">
+                        <a href="#" class="hover:opacity-60 transition-opacity">Get Started</a>
+                        <a href="#" class="hover:opacity-60 transition-opacity">About</a>
+                        <a href="#" class="hover:opacity-60 transition-opacity">Projects</a>
+                        <a href="#" class="hover:opacity-60 transition-opacity">Experience</a>
+                    </nav>
+                    <button class="w-11 h-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,0,0,0.1)]">
+                        <img src="https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/icon_contact.png" alt="Contact" class="w-6 h-6 object-contain" referrerPolicy="no-referrer">
+                    </button>
+                </div>
+            </header>
+
+            <main class="flex-1 flex flex-col items-center pt-[200px] relative z-10 w-full h-full">
+                <!-- Screen 1: Title -->
+                <h1 id="screen1-title" class="text-[4rem] md:text-[5.5rem] lg:text-[6.5rem] font-medium text-center leading-[1.05] tracking-tight text-black max-w-4xl px-4 absolute top-[220px]">
+                    A place to display masterpiece.
+                </h1>
+
+                <!-- Screen 2: Projects Collage -->
+                <div id="screen2-group" class="absolute inset-0 w-full h-full pointer-events-none flex flex-col pt-[200px]">
+                    <div class="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none">
+                        <div class="w-full max-w-[2120px] px-[100px] relative h-full">
+                            <div id="screen2-text" class="absolute left-[100px] top-[1390px] -translate-y-1/2 w-[900px] z-[100] pointer-events-none opacity-0 will-change-transform will-change-opacity">
+                                <h2 class="text-[95px] leading-[1.0] font-medium font-outfit text-[#000000] tracking-tight">Projects</h2>
+                                <h2 class="text-[95px] leading-[1.0] font-medium font-outfit text-[#9D0202] tracking-tight whitespace-nowrap">Visual & Interactive</h2>
+                                <h2 class="text-[95px] leading-[1.0] font-medium font-outfit text-[#8D8D8D] tracking-tight">Design</h2>
+                                <p class="mt-[72px] text-[20px] text-[#000000] font-normal leading-relaxed max-w-[430px]">
+                                    Focused on user-centric UI design, I specialize in minimalist visual aesthetics, interface layout optimization, and brand visual presentation. With a keen sense of detail and modern design trends, I deliver intuitive, refined and high-quality interface solutions for diverse product scenarios.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="collage-container" class="relative w-full flex-1 mx-auto pointer-events-auto">
+                        <!-- Speech Bubbles -->
+                        <div id="bubble-blue" class="absolute z-40 drop-shadow-xl opacity-0 transition-opacity duration-1000" style="left: calc(50% - 444.8px); top: 500px; transform: translate(-50%, -50%) rotate(-14deg);">
+                            <div class="bg-[#2563eb] text-white px-8 py-4 rounded-[2rem] text-3xl font-medium relative">
+                                Mabel
+                                <div class="absolute -bottom-4 right-6 w-8 h-8 bg-[#2563eb] speech-bubble-tail"></div>
+                            </div>
+                        </div>
+                        <div id="bubble-green" class="absolute z-40 drop-shadow-xl opacity-0 transition-opacity duration-1000" style="left: calc(50% + 382.4px); top: 405px; transform: translate(-50%, -50%) rotate(15deg);">
+                            <div class="bg-[#34d399] text-white px-8 py-4 rounded-[2rem] text-3xl font-medium relative">
+                                Mabel
+                                <div class="absolute -bottom-4 right-6 w-8 h-8 bg-[#34d399] speech-bubble-tail"></div>
+                            </div>
+                        </div>
+                        <div id="bubble-red" class="absolute z-[110] drop-shadow-xl pointer-events-none opacity-0" style="left: calc(50% + 156.8px); top: 1130px; transform: translate(-50%, 0) rotate(-8.6deg);">
+                            <div class="bg-[#9D0202] text-white rounded-[45px] w-[146px] min-w-[146px] h-[74px] min-h-[74px] flex items-center justify-center text-[34px] font-medium relative">
+                                Mabel
+                                <div class="absolute -bottom-4 right-10 w-8 h-8 bg-[#9D0202] speech-bubble-tail"></div>
+                            </div>
+                        </div>
+                        <div id="bubble-black" class="absolute z-[110] drop-shadow-lg pointer-events-none opacity-0" style="left: calc(50% + 619px); top: 1366px; transform: translate(-50%, 0) rotate(-8.6deg);">
+                            <div class="bg-black text-white rounded-[19px] w-[88px] min-w-[88px] h-[38px] min-h-[38px] flex items-center justify-center text-[16px] font-medium relative">
+                                Mabel
+                                <div class="absolute -bottom-2.5 right-4 w-5 h-5 bg-black speech-bubble-tail"></div>
+                            </div>
+                        </div>
+
+                        <!-- Cards will be initialized via JS -->
+                         <div id="tilt-cards"></div>
+                    </div>
+                </div>
+
+                <!-- Screen 3: Gateway -->
+                <div id="screen3-group" class="absolute inset-0 w-full h-full flex items-center justify-center z-40 pointer-events-none opacity-0">
+                    <div class="w-full max-w-[2120px] px-[100px] pt-[calc(20vh-50px)] flex flex-col items-start pointer-events-none">
+                        <div class="w-full pointer-events-auto">
+                            <h2 class="text-[95px] leading-[1.1] font-medium text-[#000000] tracking-tight">Gateway to</h2>
+                            <h2 class="text-[95px] leading-[1.1] font-medium text-[#000000] tracking-tight">artist people.</h2>
+                        </div>
+                        <div class="mt-[5vh] w-full h-[611px] bg-[#EF7851] rounded-[28px] relative flex-shrink-0 pointer-events-auto">
+                            <img src="https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/%E7%AC%AC%E4%B8%89%E5%B1%8F%E5%8D%A1%E7%89%87%E8%A3%85%E9%A5%B0.png" class="absolute top-[40px] left-[50px] w-[66px] h-[144px] object-contain z-10" referrerPolicy="no-referrer">
+                            <img src="https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/%E4%BA%BA%E7%89%A9%E7%B4%A0%E6%9D%902.png" class="absolute bottom-0 right-[260px] w-[650px] h-[611px] object-contain pointer-events-none z-30" alt="Person portrait" referrerPolicy="no-referrer">
+                            
+                            <div class="absolute z-[40] drop-shadow-xl pointer-events-none" style="right: 130px; top: -110px; transform: rotate(12deg);">
+                                <div class="bg-black text-white rounded-[45px] w-[146px] min-w-[146px] h-[74px] min-h-[74px] flex items-center justify-center text-[34px] font-medium relative">
+                                    Mabel
+                                    <div class="absolute -bottom-4 left-[80px] w-8 h-8 bg-black speech-bubble-tail"></div>
+                                </div>
+                            </div>
+    
+                            <div class="absolute left-[50px] bottom-[44px] w-[calc(100%-50px)] z-20 flex flex-col pointer-events-none">
+                                <div class="flex gap-4 mb-8 pointer-events-auto">
+                                    <button id="exp-prev" class="w-[50px] h-[50px] rounded-full bg-white flex items-center justify-center transition-colors shadow-sm cursor-pointer disabled:cursor-default disabled:bg-white!">
+                                        <i data-lucide="arrow-left" class="text-black transition-opacity duration-300"></i>
+                                    </button>
+                                    <button id="exp-next" class="w-[50px] h-[50px] rounded-full bg-white flex items-center justify-center transition-colors shadow-sm cursor-pointer disabled:cursor-default disabled:bg-white!">
+                                        <i data-lucide="arrow-right" class="text-black transition-opacity duration-300"></i>
+                                    </button>
+                                </div>
+                                <div id="exp-scroll" class="flex gap-[104px] overflow-x-auto w-full pr-[100px] items-start no-scrollbar pointer-events-auto pb-4 snap-x snap-mandatory">
+                                    <div class="flex-none flex flex-col relative w-[608px] snap-start">
+                                        <div class="flex items-center gap-[40px]">
+                                            <h3 class="text-white text-[32px] font-bold leading-tight">Global Design Agency</h3>
+                                            <span class="text-white text-[20px] font-normal mt-1">2024~2025</span>
+                                        </div>
+                                        <div class="flex items-center gap-[12px] mt-[13px]">
+                                            <div class="w-[30px] h-[30px] rounded-full border-[2px] border-white flex-shrink-0"></div>
+                                            <h4 class="text-white text-[20px] font-normal">Designer</h4>
+                                        </div>
+                                        <p class="text-white/90 text-[20px] font-normal mt-6 w-full whitespace-normal leading-relaxed">
+                                            Focused on user-centric UI design, I specialize in minimalist visual aesthetics, interface layout optimization, and brand visual presentation.
+                                        </p>
+                                    </div>
+                                    <div class="flex-none flex flex-col relative w-[608px] snap-start">
+                                        <div class="flex items-center gap-[40px]">
+                                            <h3 class="text-white text-[32px] font-bold leading-tight">Art Studio</h3>
+                                            <span class="text-white text-[20px] font-normal mt-1">2022~2024</span>
+                                        </div>
+                                        <div class="flex items-center gap-[12px] mt-[13px]">
+                                            <div class="w-[30px] h-[30px] rounded-full border-[2px] border-white flex-shrink-0"></div>
+                                            <h4 class="text-white text-[20px] font-normal">Lead Designer</h4>
+                                        </div>
+                                        <p class="text-white/90 text-[20px] font-normal mt-6 w-full whitespace-normal leading-relaxed">
+                                            Leading creative directions and implementing innovative visual systems for digital platforms.
+                                        </p>
+                                    </div>
+                                    <div class="flex-none flex flex-col relative w-[608px] snap-start">
+                                        <div class="flex items-center gap-[40px]">
+                                            <h3 class="text-white text-[32px] font-bold leading-tight">Creative Labs</h3>
+                                            <span class="text-white text-[20px] font-normal mt-1">2020~2022</span>
+                                        </div>
+                                        <div class="flex items-center gap-[12px] mt-[13px]">
+                                            <div class="w-[30px] h-[30px] rounded-full border-[2px] border-white flex-shrink-0"></div>
+                                            <h4 class="text-white text-[20px] font-normal">UI/UX Intern</h4>
+                                        </div>
+                                        <p class="text-white/90 text-[20px] font-normal mt-6 w-full whitespace-normal leading-relaxed">
+                                            Learned the foundations of user experience and visual design through high-impact projects.
+                                        </p>
+                                    </div>
+                                    <div class="flex-none w-[60vw]"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Screen 4: Abilities -->
+                <div id="screen4-group" class="absolute inset-0 w-full h-full flex items-center justify-center z-50 pointer-events-none opacity-0">
+                    <div class="w-full max-w-[2120px] px-[100px] pt-[15vh] pb-[10vh] flex items-start justify-between pointer-events-none">
+                        <div class="flex flex-col flex-1 pointer-events-auto max-w-[660px] h-[770px] justify-between">
+                            <div>
+                                <div class="w-full flex justify-start">
+                                    <img src="https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/icon_ability.png" class="w-[68px] h-[68px] object-contain mb-6" alt="Ability Icon">
+                                </div>
+                                <h2 class="text-[60px] font-medium text-[#000000] leading-[1.1]">Abilities & Expertise</h2>
+                                <p class="mt-[52px] text-[20px] text-[#000000] leading-[30px] whitespace-normal w-[660px]">
+                                    Proficient in Figma, Sketch, Photoshop, Illustrator, After Effects and C4D.<br/><br/>
+                                    Experienced in UI design, interaction design, motion design and visual design, with a focus on creating clean, functional and user-centered digital products.
+                                </p>
+                            </div>
+                            <div id="physics-container" class="w-[480px] h-[450px] relative bg-transparent overflow-visible mb-[20px]"></div>
+                        </div>
+    
+                        <div class="flex-none pointer-events-auto mr-[50px] relative w-[814px] h-[770px]">
+                            <img src="https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/folder.png" class="absolute inset-0 w-[814px] h-[770px] object-contain" alt="Folder showcase" referrerPolicy="no-referrer">
+                            <h3 class="absolute top-[30px] left-[45px] text-[36px] font-medium text-[#000000] z-20 leading-none">Mastery</h3>
+                            <h3 class="absolute top-[130px] left-[45px] text-[36px] font-medium text-white z-20 leading-none">Fields</h3>
+                            <div class="absolute bottom-0 left-0 w-[814px] h-[570px] bg-white rounded-[28px] overflow-hidden flex items-center justify-center z-10">
+                                <div class="grid grid-cols-2 gap-[46px] w-[724px] h-auto relative -top-[32px]">
+                                    <!-- Card 1 -->
+                                    <div class="relative w-[339px] h-[265px] rounded-[20px] overflow-hidden group">
+                                        <img src="https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/fields_interface.png" class="w-full h-full object-cover" referrerPolicy="no-referrer">
+                                        <div class="absolute bottom-0 left-0 w-[339px] h-[172px] z-10 backdrop-blur-[50px] rounded-b-[20px] [mask-image:linear-gradient(to_top,black_0%,black_40%,rgba(0,0,0,0.5)_75%,transparent_100%)]" style="background: linear-gradient(to top, rgba(255, 255, 255, 0.12) 0%, transparent 100%)"></div>
+                                        <div class="absolute bottom-[24px] left-[24px] z-20"><span class="text-[28px] font-medium text-white leading-none tracking-tight">Interface</span></div>
+                                        <div class="absolute bottom-[24px] right-[24px] z-20 flex items-center gap-3">
+                                            <span class="text-[24px] font-medium text-white leading-none tracking-tight">100%</span>
+                                            <div class="w-[28px] h-[28px] relative">
+                                                <svg width="28" height="28" class="rotate-[-90deg]">
+                                                    <circle cx="14" cy="14" r="11.5" fill="transparent" stroke="rgba(255,255,255,0.2)" stroke-width="5"></circle>
+                                                    <circle cx="14" cy="14" r="11.5" fill="transparent" stroke="white" stroke-width="5" stroke-dasharray="72.25" stroke-dashoffset="0" stroke-linecap="round"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Card 2 -->
+                                    <div class="relative w-[339px] h-[265px] rounded-[20px] overflow-hidden group">
+                                        <img src="https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/fields_interaction.png" class="w-full h-full object-cover" referrerPolicy="no-referrer">
+                                        <div class="absolute bottom-0 left-0 w-[339px] h-[172px] z-10 backdrop-blur-[50px] rounded-b-[20px] [mask-image:linear-gradient(to_top,black_0%,black_40%,rgba(0,0,0,0.5)_75%,transparent_100%)]" style="background: linear-gradient(to top, rgba(255, 255, 255, 0.12) 0%, transparent 100%)"></div>
+                                        <div class="absolute bottom-[24px] left-[24px] z-20"><span class="text-[28px] font-medium text-[#000000] leading-none tracking-tight">Interaction</span></div>
+                                        <div class="absolute bottom-[24px] right-[24px] z-20 flex items-center gap-3">
+                                            <span class="text-[24px] font-medium text-[#000000] leading-none tracking-tight">70%</span>
+                                            <div class="w-[28px] h-[28px] relative">
+                                                <svg width="28" height="28" class="rotate-[-90deg]">
+                                                    <circle cx="14" cy="14" r="11.5" fill="transparent" stroke="rgba(0,0,0,0.1)" stroke-width="5"></circle>
+                                                    <circle cx="14" cy="14" r="11.5" fill="transparent" stroke="#000000" stroke-width="5" stroke-dasharray="72.25" stroke-dashoffset="21.675" stroke-linecap="round"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Card 3 -->
+                                    <div class="relative w-[339px] h-[265px] rounded-[20px] overflow-hidden group">
+                                        <video src="https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/fields_animate.mp4" autoPlay muted loop playsInline class="w-full h-full object-cover"></video>
+                                        <div class="absolute bottom-0 left-0 w-[339px] h-[172px] z-10 backdrop-blur-[50px] rounded-b-[20px] [mask-image:linear-gradient(to_top,black_0%,black_40%,rgba(0,0,0,0.5)_75%,transparent_100%)]" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.25) 0%, transparent 100%)"></div>
+                                        <div class="absolute bottom-[24px] left-[24px] z-20"><span class="text-[28px] font-medium text-white leading-none tracking-tight">Animation</span></div>
+                                        <div class="absolute bottom-[24px] right-[24px] z-20 flex items-center gap-3">
+                                            <span class="text-[24px] font-medium text-white leading-none tracking-tight">80%</span>
+                                            <div class="w-[28px] h-[28px] relative">
+                                                <svg width="28" height="28" class="rotate-[-90deg]">
+                                                    <circle cx="14" cy="14" r="11.5" fill="transparent" stroke="rgba(255,255,255,0.2)" stroke-width="5"></circle>
+                                                    <circle cx="14" cy="14" r="11.5" fill="transparent" stroke="white" stroke-width="5" stroke-dasharray="72.25" stroke-dashoffset="14.45" stroke-linecap="round"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Card 4 -->
+                                    <div class="relative w-[339px] h-[265px] rounded-[20px] overflow-hidden group">
+                                        <img src="https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/fields_visual.png" class="w-full h-full object-cover" referrerPolicy="no-referrer">
+                                        <div class="absolute bottom-0 left-0 w-[339px] h-[172px] z-10 backdrop-blur-[50px] rounded-b-[20px] [mask-image:linear-gradient(to_top,black_0%,black_40%,rgba(0,0,0,0.5)_75%,transparent_100%)]" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.25) 0%, transparent 100%)"></div>
+                                        <div class="absolute bottom-[24px] left-[24px] z-20"><span class="text-[28px] font-medium text-white leading-none tracking-tight">Visual Design</span></div>
+                                        <div class="absolute bottom-[24px] right-[24px] z-20 flex items-center gap-3">
+                                            <span class="text-[24px] font-medium text-white leading-none tracking-tight">40%</span>
+                                            <div class="w-[28px] h-[28px] relative">
+                                                <svg width="28" height="28" class="rotate-[-90deg]">
+                                                    <circle cx="14" cy="14" r="11.5" fill="transparent" stroke="rgba(255,255,255,0.2)" stroke-width="5"></circle>
+                                                    <circle cx="14" cy="14" r="11.5" fill="transparent" stroke="white" stroke-width="5" stroke-dasharray="72.25" stroke-dashoffset="43.35" stroke-linecap="round"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Screen 5: Portfolio Showcase -->
+                <div id="screen5-group" class="absolute inset-0 w-full h-full flex items-center justify-center z-50 pointer-events-none opacity-0 overflow-hidden">
+                    <!-- Fixed width container for everything in Screen 5 -->
+                    <div class="relative w-[1500px] h-[688px] flex items-center justify-center pointer-events-none">
+                        <div id="project-stack" class="relative w-[1158px] h-[688px] pointer-events-auto"></div>
+                        
+                        <!-- Right Index -->
+                        <div id="project-index" class="w-[280px] ml-[80px] flex flex-col items-start gap-[60px] py-[40px] pointer-events-auto relative"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // --- Data Definitions ---
+        const projects = [
+            { name: 'Project 1', color: '#EF7851', tags: ['APP', 'Project name'], image: 'https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/project1.png' },
+            { name: 'Project 2', color: '#7E87FF', tags: ['WEB', 'Brand Design'], image: 'https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/project2.png' },
+            { name: 'Project 3', color: '#FFD900', tags: ['MOTION', 'Visual Art'], image: 'https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/project3.png' },
+            { name: 'Project 4', color: '#5ECCAD', tags: ['UX', 'System Design'], image: 'https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/project4.png' },
+            { name: 'Project 5', color: '#FF7EB3', tags: ['UI', 'Interface'], image: 'https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/project5.png' },
+        ];
+
+        const cardsData = [
+            { id: 1, img: 'https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/Rectangle1.png', w: 354, h: 488, sL: 26.5, sT: 882, sR: -17, eL: 41, eT: 1035, eR: 0, d: 0.4, zS: 60, zE: 10 },
+            { id: 2, img: 'https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/Rectangle2.png', w: 354, h: 488, sL: 39, sT: 786, sR: 14, eL: 54, eT: 1110, eR: 0, d: 0.3, zS: 50, zE: 20 },
+            { id: 3, img: 'https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/Rectangle3.png', w: 354, h: 488, sL: 50, sT: 690, sR: -12, eL: 67, eT: 1185, eR: 0, d: 0.2, zS: 40, zE: 30 },
+            { id: 4, img: 'https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/Rectangle4.png', w: 354, h: 488, sL: 61, sT: 738, sR: 14, eL: 80, eT: 1260, eR: 0, d: 0.1, zS: 30, zE: 40 },
+            { id: 5, img: 'https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/Rectangle5.png', w: 354, h: 488, sL: 73.2, sT: 906, sR: 21, eL: 93, eT: 1335, eR: 0, d: 0.2, zS: 45, zE: 50 },
+            { id: 6, img: 'https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/Rectangle6.png', w: 354, h: 488, sL: 70.5, sT: 854, sR: -7, eL: 106, eT: 1410, eR: 0, d: 0.0, zS: 20, zE: 60 },
+        ];
+
+        const icons = [
+            'https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/round_ae.png',
+            'https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/round_ai.png',
+            'https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/round_ps.png',
+            'https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/round_figma.png',
+            'https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/round_sketch.png',
+            'https://pub-90efcc419c6d4425b0c4798246125804.r2.dev/round_c4d.png'
+        ];
+
+        // --- State ---
+        let currentTextIdx = 0;
+        let activeProjectIdx = 0;
+        let isPhysicsActive = false;
+        let scrollYProgress = 0;
+        let startTime = null;
+        let animationFrame = null;
+
+        // --- DOM Elements ---
+        const tiltCardsContainer = document.getElementById('tilt-cards');
+        const projectStack = document.getElementById('project-stack');
+        const projectIndex = document.getElementById('project-index');
+
+        // --- Initialization ---
+        lucide.createIcons();
+
+        // Initial intro animation using performance.now() for smoother timing
+        function startIntro() {
+            startTime = null;
+            requestAnimationFrame(animate);
+        }
+
+        // Create tilt cards
+        cardsData.forEach(data => {
+            const el = document.createElement('div');
+            el.className = 'tilt-card-wrapper absolute';
+            el.id = `card-${data.id}`;
+            el.style.width = `${data.w}px`;
+            el.style.height = `${data.h}px`;
+            el.style.zIndex = data.zS;
+            el.style.perspective = '1200px';
+            el.style.left = '50vw';
+            el.style.top = '1500px';
+            el.style.opacity = '0';
+            el.style.transform = 'translate(-50%, -50%) scale(0.5)';
+            el.innerHTML = `
+                <div class="tilt-card-inner w-full h-full relative cursor-pointer transition-shadow duration-300 hover:shadow-[0_30px_60px_rgba(0,0,0,0.3)] rounded-[2rem]" style="transform-style: preserve-3d;">
+                    <img src="${data.img}" class="w-full h-full object-contain drop-shadow-2xl" referrerPolicy="no-referrer">
+                </div>
+            `;
+            tiltCardsContainer.appendChild(el);
+            
+            // Add tilt interaction
+            const inner = el.querySelector('.tilt-card-inner');
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width;
+                const y = (e.clientY - rect.top) / rect.height;
+                const rX = (y - 0.5) * 30; // -15 to 15
+                const rY = (0.5 - x) * 30; // 15 to -15
+                inner.style.transform = `rotateX(${rX}deg) rotateY(${rY}deg) scale(1.05)`;
+            });
+            el.addEventListener('mouseleave', () => {
+                inner.style.transform = `rotateX(0deg) rotateY(0deg) scale(1)`;
+            });
+        });
+
+        // Create project cards and index
+        projects.forEach((p, idx) => {
+            // Card
+            const card = document.createElement('div');
+            card.className = 'project-card p-0 flex flex-col items-center overflow-hidden absolute transition-all duration-300';
+            card.style.backgroundColor = p.color;
+            card.style.width = '1158px';
+            card.style.height = '688px';
+            card.style.borderRadius = '28px';
+            card.style.boxShadow = '0 40px 80px rgba(0,0,0,0.1)';
+            card.style.cursor = 'pointer';
+            card.style.top = '0';
+            card.style.left = '0';
+            card.innerHTML = `
+                <img src="${p.image}" class="w-[1108px] h-[458px] rounded-[24px] mt-[25px] object-cover" referrerPolicy="no-referrer">
+                <div class="w-full px-12 pt-8 flex flex-col text-black">
+                    <div class="flex items-center justify-between w-full">
+                        <div class="flex items-center gap-6">
+                            <h2 class="text-[56px] font-medium leading-none tracking-tight">${p.name}</h2>
+                            <div class="w-[50px] h-[50px] rounded-full bg-black flex items-center justify-center flex-shrink-0">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${p.color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="6" y1="18" x2="18" y2="6"></line>
+                                    <polyline points="8 6 18 6 18 16"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            ${p.tags.map(t => `<div class="h-[53px] px-8 rounded-full bg-black flex items-center justify-center"><span style="color: ${p.color}" class="text-[18px] font-semibold whitespace-nowrap">${t}</span></div>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            card.onclick = () => { 
+                activeProjectIdx = idx; 
+                updateProjectShowcase(); 
+                const maxScroll = document.body.scrollHeight - window.innerHeight;
+                const targetProgress = 0.84 + idx * (0.16 / projects.length) + 0.005;
+                window.scrollTo({ top: targetProgress * maxScroll, behavior: 'smooth' });
+            };
+            projectStack.appendChild(card);
+
+            // Index
+            const item = document.createElement('div');
+            item.className = 'project-index-item flex items-center gap-4 cursor-pointer relative z-10 h-[36px] group';
+            item.innerHTML = `
+                <div class="dot w-2 h-2 rounded-full bg-black flex-shrink-0 transition-opacity duration-300 opacity-30 group-hover:opacity-60"></div>
+                ${idx < projects.length - 1 ? `<svg class="absolute left-[2px] top-[26px] w-[4px] h-[84px] z-0"><line x1="2" y1="0" x2="2" y2="100%" stroke="black" stroke-width="4" stroke-dasharray="1.5 4" stroke-opacity="0.1" /></svg>` : ''}
+                <span class="text-[24px] font-medium transition-all duration-300 text-black opacity-30 group-hover:opacity-60">${p.name}</span>
+            `;
+            item.onclick = () => { 
+                activeProjectIdx = idx; 
+                updateProjectShowcase(); 
+                const maxScroll = document.body.scrollHeight - window.innerHeight;
+                const targetProgress = 0.84 + idx * (0.16 / projects.length) + 0.005;
+                window.scrollTo({ top: targetProgress * maxScroll, behavior: 'smooth' });
+            };
+            projectIndex.appendChild(item);
+        });
+
+        function updateProjectShowcase() {
+            const cards = document.querySelectorAll('.project-card');
+            const items = document.querySelectorAll('.project-index-item');
+            
+            cards.forEach((card, idx) => {
+                let y = 0, x = 0, r = 0, op = 0, s = 1, z = 0;
+                if (idx === activeProjectIdx) { op = 1; z = 30; }
+                else if (idx === activeProjectIdx - 1) { y = -58; x = -50; r = -6; op = 0.3; z = 10; s = 0.95; }
+                else if (idx === activeProjectIdx + 1) { y = 732; op = 1; z = 20; }
+                else if (idx < activeProjectIdx - 1) { op = 0; z = 5; y = -300; }
+                else { op = 0; z = 5; y = 1000; }
+                
+                card.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg) scale(${s})`;
+                card.style.opacity = op;
+                card.style.zIndex = z;
+            });
+
+            items.forEach((item, idx) => {
+                const isActive = idx === activeProjectIdx;
+                item.querySelector('.dot').style.opacity = isActive ? '1' : '0.3';
+                item.querySelector('span').style.opacity = isActive ? '1' : '0.3';
+            });
+        }
+        updateProjectShowcase();
+
+        // --- Physics Engine ---
+        const physicsContainer = document.getElementById('physics-container');
+        let engine, runner, bodies = [];
+
+        function initPhysics() {
+            if (engine) return;
+            engine = Matter.Engine.create();
+            engine.world.gravity.y = 0;
+            runner = Matter.Runner.create();
+            
+            const width = 480, height = 450, radius = 53.5;
+            bodies = icons.map((icon, idx) => {
+                const b = Matter.Bodies.circle(65 + idx * 70, 30 + Math.random() * 150, radius, {
+                    restitution: 0.5 + Math.random() * 0.4,
+                    frictionAir: 0.001 + Math.random() * 0.005,
+                    angle: Math.random() * Math.PI * 2
+                });
+                const img = document.createElement('img');
+                img.src = icon;
+                img.className = 'absolute w-[107px] h-[107px] transition-opacity duration-700 opacity-0';
+                img.draggable = false;
+                physicsContainer.appendChild(img);
+                b.imgElement = img;
+                return b;
+            });
+
+            const ground = Matter.Bodies.rectangle(width / 2, height - 30, width + 200, 60, { isStatic: true, restitution: 0.8, friction: 0.1 });
+            const wallL = Matter.Bodies.rectangle(-30, height / 2, 60, height * 2, { isStatic: true, restitution: 0.6, friction: 0.1 });
+            const wallR = Matter.Bodies.rectangle(width + 30, height / 2, 60, height * 2, { isStatic: true, restitution: 0.6, friction: 0.1 });
+            
+            const mouse = Matter.Mouse.create(physicsContainer);
+            const mc = Matter.MouseConstraint.create(engine, { mouse, constraint: { stiffness: 0.2 } });
+            
+            Matter.World.add(engine.world, [...bodies, ground, wallL, wallR, mc]);
+            Matter.Events.on(engine, 'afterUpdate', () => {
+                bodies.forEach(b => {
+                    b.imgElement.style.transform = `translate(${b.position.x - 53.5}px, ${b.position.y - 53.5}px) rotate(${b.angle}rad)`;
+                });
+            });
+            Matter.Runner.run(runner, engine);
+        }
+
+        function startPhysics() {
+            initPhysics();
+            bodies.forEach(b => b.imgElement.style.opacity = '1');
+            setTimeout(() => {
+                engine.world.gravity.y = 2.2;
+                bodies.forEach(b => {
+                    Matter.Body.setAngularVelocity(b, (Math.random() - 0.5) * 0.3);
+                    Matter.Body.setVelocity(b, { x: (Math.random() - 0.5) * 10, y: -4 - Math.random() * 6 });
+                });
+            }, 500);
+        }
+
+        function stopPhysics() {
+            if (!engine) return;
+            bodies.forEach(b => b.imgElement.style.opacity = '0');
+        }
+
+        // --- Scroll Animation Loop ---
+        function animate(timestamp) {
+            if (startTime === null) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            
+            const scroll = window.scrollY;
+            const vh = window.innerHeight;
+            const maxScroll = document.body.scrollHeight - vh;
+            scrollYProgress = scroll / maxScroll;
+
+            // Screen 1: Title Fade & Move
+            const s1Opacity = Math.max(0, 1 - scrollYProgress / 0.2); 
+            const s1YMove = -scroll; 
+            document.getElementById('screen1-title').style.opacity = s1Opacity;
+            document.getElementById('screen1-title').style.transform = `translateY(${s1YMove}px)`;
+
+            // Screen 2: Collage Group Logic
+            const s2Group = document.getElementById('screen2-group');
+            const s2Text = document.getElementById('screen2-text');
+            
+            let s2Opacity = 1;
+            let groupYOffset = -scroll;
+
+            const s2Start = 0.10;
+            const s2End = 0.35;
+            
+            if (scrollYProgress < s2Start) {
+                s2Opacity = 1;
+                s2Text.style.opacity = 0;
+            } else if (scrollYProgress < s2End) {
+                s2Opacity = 1;
+                s2Text.style.opacity = Math.min(1, (scrollYProgress - s2Start) / 0.06);
+            } else {
+                s2Opacity = Math.max(0, 1 - (scrollYProgress - s2End) / 0.10);
+                s2Text.style.opacity = Math.max(0, 1 - (scrollYProgress - s2End) / 0.08);
+            }
+            
+            s2Group.style.opacity = s2Opacity;
+            s2Group.style.transform = `translateY(${groupYOffset}px)`;
+
+            // Cards Animation Logic
+            const effProg = Math.min(1, scrollYProgress * 6.25);
+            const prog2 = Math.max(0, Math.min(1, (effProg - 0.4) / 0.6));
+
+            cardsData.forEach((data, index) => {
+                const el = document.getElementById(`card-${data.id}`);
+                
+                // Staggered Intro Progress per card
+                const duration = 1300; // Snappier deal
+                const stagger = 100; 
+                const cardElapsed = Math.max(0, elapsed - index * stagger);
+                const cardIntroProg = Math.min(1, cardElapsed / duration);
+                
+                // Pure Ease Out Expo
+                const easedIntro = cardIntroProg === 1 ? 1 : 1 - Math.pow(2, -10 * cardIntroProg);
+                
+                // Use a reference width (1920px) to keep spacing fixed relative to center
+                const REF_W = 1920;
+                const VW_TO_PX = REF_W / 100;
+                
+                // Calculate offsets from center point (50% or 0px offset)
+                const sL_offset = (data.sL - 50) * VW_TO_PX;
+                const eL_offset = (data.eL - 50) * VW_TO_PX;
+                const fan_start_offset = 0; // Starts at center horizontally
+
+                const currentOffset = effProg < 0.4 
+                    ? fan_start_offset + (sL_offset - fan_start_offset) * easedIntro 
+                    : sL_offset + (eL_offset - sL_offset) * prog2;
+
+                const fanStartT = 1500; // Start below
+                const currentStartT = fanStartT + (data.sT - fanStartT) * easedIntro;
+                const topAtEndOfPhase1 = data.sT - (0.4 * vh);
+                const currentTop = effProg < 0.4 ? currentStartT : data.sT + (data.eT - topAtEndOfPhase1) * prog2;
+
+                const fanStartR = -40 + (index * 5); // Tightly stacked rotation
+                const currentStartR = fanStartR + (data.sR - fanStartR) * easedIntro;
+                const currentRotate = effProg < 0.4 ? currentStartR : data.sR + (data.eR - data.sR) * Math.min(1, prog2 * 1.5);
+
+                const fanStartScale = 0.5;
+                const currentScale = fanStartScale + (1 - fanStartScale) * easedIntro;
+                const currentZ = prog2 > 0.1 ? data.zE : data.zS;
+                
+                el.style.left = `calc(50% + ${currentOffset}px)`;
+                el.style.top = `${currentTop}px`;
+                el.style.transform = `translate(-50%, -50%) rotate(${currentRotate}deg) scale(${currentScale})`;
+                el.style.zIndex = currentZ;
+                el.style.opacity = cardIntroProg > 0 ? 1 : 0;
+                el.style.willChange = 'transform, opacity, left, top';
+            });
+
+            // Bubbles logic - fly-in + scroll response
+            // Fly up 150px as they fade in, starting from slightly lower
+            const bubbleDealTime = 0; // Start immediately with intro
+            const flyInDuration = 550; // Sync with fade-in duration
+            const flyInProg = Math.min(1, Math.max(0, elapsed - bubbleDealTime) / flyInDuration);
+            const introFlyY = (1 - flyInProg) * 180; // Fly up 180px
+            
+            // Track transition progress for fade
+            const bubbleFadeIn = Math.min(1, (elapsed - bubbleDealTime) / 500); 
+            const scrollFade = Math.max(0, 1 - scrollYProgress / 0.1);
+            const finalBubbleOpacity = scrollFade * bubbleFadeIn;
+
+            const bubbleBlue = document.getElementById('bubble-blue');
+            const bubbleGreen = document.getElementById('bubble-green');
+            if (bubbleBlue) bubbleBlue.style.opacity = finalBubbleOpacity;
+            if (bubbleGreen) bubbleGreen.style.opacity = finalBubbleOpacity;
+            
+            document.getElementById('bubble-blue').style.transform = `translate(-50%, calc(-50% + ${introFlyY}px)) rotate(-14deg)`;
+            document.getElementById('bubble-green').style.transform = `translate(-50%, calc(-50% + ${introFlyY}px)) rotate(15deg)`;
+
+            const delayedBubbleProg = (scrollYProgress >= 0.14 && scrollYProgress <= 0.18) ? (scrollYProgress - 0.14) / 0.04 : (scrollYProgress > 0.18 ? 1 : 0);
+            document.getElementById('bubble-red').style.opacity = delayedBubbleProg;
+            document.getElementById('bubble-black').style.opacity = delayedBubbleProg;
+
+            // Screen 3: Gateway
+            const s3Group = document.getElementById('screen3-group');
+            let s3Y = 100;
+            if (scrollYProgress >= 0.36 && scrollYProgress <= 0.46) s3Y = 100 - (scrollYProgress - 0.36) / 0.10 * 100;
+            else if (scrollYProgress > 0.46 && scrollYProgress <= 0.54) s3Y = 0;
+            else if (scrollYProgress > 0.54 && scrollYProgress <= 0.64) s3Y = -(scrollYProgress - 0.54) / 0.10 * 115;
+            else if (scrollYProgress > 0.64) s3Y = -115;
+            s3Group.style.transform = `translateY(${s3Y}vh)`;
+            const s3Op = (scrollYProgress >= 0.38 && scrollYProgress <= 0.46) ? (scrollYProgress - 0.38) / 0.08 : (scrollYProgress > 0.46 ? 1 : 0);
+            s3Group.style.opacity = Math.max(0, Math.min(1, s3Op));
+
+            // Screen 4: Abilities
+            const s4Group = document.getElementById('screen4-group');
+            let s4Y = 115;
+            if (scrollYProgress >= 0.54 && scrollYProgress <= 0.64) s4Y = 115 - (scrollYProgress - 0.54) / 0.10 * 115;
+            else if (scrollYProgress > 0.64 && scrollYProgress <= 0.74) s4Y = 0;
+            else if (scrollYProgress > 0.74 && scrollYProgress <= 0.84) s4Y = -(scrollYProgress - 0.74) / 0.1 * 115;
+            else if (scrollYProgress > 0.84) s4Y = -115;
+            s4Group.style.transform = `translateY(${s4Y}vh)`;
+            const s4Op = (scrollYProgress >= 0.56 && scrollYProgress <= 0.64) ? (scrollYProgress - 0.56) / 0.08 : (scrollYProgress > 0.64 ? 1 : 0);
+            s4Group.style.opacity = Math.max(0, Math.min(1, s4Op));
+            
+            // Physics Trigger
+            if (scrollYProgress > 0.58 && !isPhysicsActive) { isPhysicsActive = true; startPhysics(); }
+            else if (scrollYProgress < 0.54 && isPhysicsActive) { isPhysicsActive = false; stopPhysics(); }
+
+            // Screen 5: Portfolio
+            const s5Group = document.getElementById('screen5-group');
+            let s5Y = 115;
+            if (scrollYProgress >= 0.74 && scrollYProgress <= 0.84) s5Y = 115 - (scrollYProgress - 0.74) / 0.1 * 115;
+            else if (scrollYProgress > 0.84) s5Y = 0;
+            s5Group.style.transform = `translateY(${s5Y}vh)`;
+            const s5Op = (scrollYProgress >= 0.76 && scrollYProgress <= 0.84) ? (scrollYProgress - 0.76) / 0.08 : (scrollYProgress > 0.84 ? 1 : 0);
+            s5Group.style.opacity = Math.max(0, Math.min(1, s5Op));
+
+            if (scrollYProgress >= 0.84) {
+                const progInS5 = (scrollYProgress - 0.84) / 0.16;
+                const pIdx = Math.min(Math.floor(progInS5 * 5), 4);
+                if (pIdx !== activeProjectIdx) { activeProjectIdx = pIdx; updateProjectShowcase(); }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        // --- Interaction Handlers ---
+        const scrollExp = document.getElementById('exp-scroll');
+        const scrollExpStep = 608 + 104;
+        const expPrevBtn = document.getElementById('exp-prev');
+        const expNextBtn = document.getElementById('exp-next');
+
+        function updateExpButtons() {
+            const isFirst = currentTextIdx === 0;
+            const isLast = currentTextIdx === 2;
+            
+            expPrevBtn.disabled = isFirst;
+            expNextBtn.disabled = isLast;
+            
+            // Button container should stay at 100% opacity
+            expPrevBtn.style.opacity = '1.0';
+            expNextBtn.style.opacity = '1.0';
+            expPrevBtn.style.pointerEvents = isFirst ? 'none' : 'auto';
+            expNextBtn.style.pointerEvents = isLast ? 'none' : 'auto';
+            expPrevBtn.style.cursor = isFirst ? 'default' : 'pointer';
+            expNextBtn.style.cursor = isLast ? 'default' : 'pointer';
+            
+            // Target the arrow icon (handled as i or svg after Lucide initialization)
+            const prevIcon = expPrevBtn.querySelector('i, svg');
+            const nextIcon = expNextBtn.querySelector('i, svg');
+            
+            if (prevIcon) {
+                prevIcon.style.opacity = isFirst ? '0.3' : '1.0';
+            }
+            if (nextIcon) {
+                nextIcon.style.opacity = isLast ? '0.3' : '1.0';
+            }
+        }
+
+        expPrevBtn.onclick = () => {
+            scrollExp.scrollBy({ left: -scrollExpStep, behavior: 'smooth' });
+        };
+        expNextBtn.onclick = () => {
+            scrollExp.scrollBy({ left: scrollExpStep, behavior: 'smooth' });
+        };
+        scrollExp.onscroll = () => {
+            const idx = Math.round(scrollExp.scrollLeft / scrollExpStep);
+            if (idx !== currentTextIdx) {
+                currentTextIdx = idx;
+                updateExpButtons();
+            }
+        };
+        // --- Scroll Animation Loop ---
+        // (Moved startIntro call below function definitions)
+
+        // Initial state
+        updateProjectShowcase();
+        updateExpButtons();
+
+        // Start the engine
+        window.addEventListener('load', startIntro);
+
+    </script>
+</body>
+</html>
